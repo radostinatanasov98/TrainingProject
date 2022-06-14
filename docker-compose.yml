@@ -1,0 +1,56 @@
+version: "3"
+services:
+  training_project_db:
+    image: mysql:8.0.29
+    hostname: db
+    environment:
+      MYSQL_DATABASE: 'training_project_development'
+      MYSQL_ROOT_PASSWORD: 'zankyosanka981021!'
+    ports:
+      - '3308:3306'
+    expose:
+      - '3306'
+    volumes:
+      - training_project_db:/var/lib/mysql
+
+  api:
+    build: ./API
+    environment:
+      - RAILS_ENV=dockerized_development
+    hostname: api
+    ports:
+      - '3000:3000'
+    expose:
+      - '3000'
+      - '80'
+    depends_on:
+      - training_project_db
+
+  administrationapp:
+    build: ./AdministrationApp
+    environment:
+      - RAILS_ENV=dockerized_development
+    hostname: adminapp
+    ports:
+      - '3030:3000'
+    expose:
+      - '3000'
+      - '80'
+    depends_on:
+      - training_project_db
+
+  usersapp:
+    build: ./UsersApp
+    environment:
+      - RAILS_ENV=dockerized_development
+    hostname: usersapp
+    ports:
+      - '3001:3000'
+    expose:
+      - '3000'
+      - '80'     
+    depends_on:
+      - api
+
+volumes:
+  training_project_db:
