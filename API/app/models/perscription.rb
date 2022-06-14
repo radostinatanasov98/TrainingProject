@@ -7,7 +7,7 @@ class ExistingExaminationValidator < ActiveModel::Validator
 end
 
 class Perscription < ApplicationRecord
-    validates :examination_id, :description, presence: true
+    validates :examination_id, presence: true
     validates_with ExistingExaminationValidator, field: :examination_id
 
     belongs_to :examination, foreign_key: "examination_id"

@@ -1,0 +1,8 @@
+default_examination:
+  id: 1
+  user_id: 2
+  weight_kg: 80
+  height_cm: 180
+  anamnesis: test
+  created_at: 2022-06-14 08:02:51.124064
+  updated_at: 2022-06-14 08:02:51.124064
