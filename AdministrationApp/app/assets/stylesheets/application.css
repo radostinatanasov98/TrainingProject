@@ -1,0 +1,29 @@
+/*
+*= require bootstrap-datepicker
+*/
+
+.user-form {
+    display: flex;
+    padding: 0% 25% 0% 25%;
+    text-align: center;
+    margin-top: 20px;
+    flex-direction: column;
+}
+
+.nav-link {
+    text-decoration: none;
+    color: white;
+}
+
+.collapse,
+.navbar {
+    background-color: #374bce;
+}
+
+.search-form {
+    display: flex;
+}
+
+.card {
+    margin: 3% 25% 0% 25%;
+}

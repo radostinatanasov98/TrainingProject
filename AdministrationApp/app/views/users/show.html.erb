@@ -1,0 +1,19 @@
+<% if @User != nil %>
+<div class="card text-center" style="margin: 3% 25% 0px 25%;">
+  <div class="card-header">
+    <h1>You are viewing <%= @User.email =%>.</h1>
+  </div>
+  <div class="card-body">
+    <h5 class="card-title">Full Name: <%= "#{@User.first_name} #{@User.last_name}"%></h5>
+    <h5 class="card-title">Address: <%= @User.address %></h5>
+    <h5 class="card-title">Date of Birth: <%= @User.date_of_birth %></h5>
+    <h5 class="card-title">Role ID: <%= @User.role_id %></h5>
+  </div>
+  <div class="card-footer text-muted" style="display: flex; justify-content: center;">
+    <%= link_to 'Edit', users_update_path(:id => "#{@User.id}"), class: 'btn btn-primary me-1'%>
+    <%= button_to 'Delete', users_delete_path(:id => "#{@User.id}"), method: :delete, style: 'display: inline-block;', class: 'btn btn-danger'%>
+  </div>
+</div>
+<% else %>
+<h1 style="text-align: center">User not found.</h1>
+<% end %>

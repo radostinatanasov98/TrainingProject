@@ -1,0 +1,27 @@
+  <%= form_with model: @user, class: 'user-form' do |f|%>
+  <%= f.label :email %>
+  <%= f.email_field :email, value: @User.email, placeholder: 'Enter Email', class: 'form-control'%>
+  <% if @User.email == "" %>
+    <%= f.label :password %>
+    <%= f.password_field :password, value: @User.password, placeholder: 'Enter Password',class: 'form-control'%>
+  <% end%>
+  <%= f.label :first_name %>
+  <%= f.text_field :first_name, value: @User.first_name, placeholder: 'Enter First Name',class: 'form-control'%>
+  <%= f.label :last_name %>
+  <%= f.text_field :last_name, value: @User.last_name, placeholder: 'Enter Last Name',class: 'form-control'%>
+  <%= f.label :address %>
+  <%= f.text_field :address, value: @User.address, placeholder: 'Enter Address',class: 'form-control'%>
+  <%= f.label :date_of_birth %>
+  <%= f.date_field :date_of_birth, value: @User.date_of_birth,style: 'width: 30%; margin-left: 35%', class: 'form-control'%>
+  <%= f.label :role_id %>
+  <div>
+    <%= f.radio_button :role_id, 2, checked: !!(@User.role_id.nil? || @User.role_id == 2), class: 'btn-check' %>
+    <%= f.label :role_id, 'Patient', value: '2', class: 'btn btn-outline-primary'%>
+    <%= f.radio_button :role_id, 3, checked: !!(@User.role_id == 3), class: 'btn-check'  %>
+    <%= f.label :role_id, 'Doctor', value: '3', class: 'btn btn-outline-primary'%>
+    <%= f.radio_button :role_id, 1, checked: !!(@User.role_id == 1), class: 'btn-check' %>
+    <%= f.label :role_id, 'Admin', value: '1', class: 'btn btn-outline-primary'%>
+  </div>
+  <%= f.hidden_field :id, value: @User.id %>
+  <%= f.submit("Submit", style: 'width: 30%; margin-left: 35%; margin-top: 15px', class: 'btn btn-primary')%>
+<% end %>

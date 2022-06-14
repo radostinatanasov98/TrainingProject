@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>UsersApp</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+
+    <%= javascript_tag do %>
+      window.info = {
+        'uid': '<%= Rails.application.credentials.dig(:aws, :access_key_id) %>',
+        'scrt': '<%= Rails.application.credentials.dig(:aws, :secret_access_key) %>',
+        'rt': '<%= cookies['tokens'] != nil ? json_parse(cookies['tokens'])['refresh_token'] : nil %>'
+      }
+    <% end %>
+    <%= javascript_include_tag 'application' %>
+    <%= javascript_include_tag 'refresh' %>
+
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  </head>
+
+  <body>
+    <% if cookies['tokens'] != nil %>
+      <%= render 'layouts/navbar' %>
+    <% end %>
+    
+    <% if notice || alert %>
+      <%= render 'layouts/alert' %>
+    <% end %>
+
+    <%= yield %>
+  </body>
+</html>

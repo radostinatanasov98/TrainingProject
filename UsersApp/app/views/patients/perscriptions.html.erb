@@ -1,0 +1,1 @@
+<%= react_component("Perscriptions", { id: JWT.decode(JSON.parse(cookies[:tokens])['jwt'], nil, false)[0]['user']['id'] }) %>

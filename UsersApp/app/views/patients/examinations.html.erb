@@ -1,0 +1,1 @@
+<%= react_component("Examinations", { id: JWT.decode(JSON.parse(cookies[:tokens])['jwt'], nil, false)[0]['user']['id'] }) %>

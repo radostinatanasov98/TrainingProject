@@ -1,0 +1,55 @@
+.examinationsContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 0% 5% 0% 5%;
+}
+
+.examCard {
+    text-align: left;
+    width: 100%;
+    margin: 1% 0.5% 1% 0.5%;
+    padding: 5px;
+    text-align: center;
+}
+
+.cardsContainer {
+    display: none;
+}
+
+.drug p {
+    text-align:  left;
+}
+
+.midCard {
+    border-left: 2px solid dimgray;
+    border-right: 2px solid dimgray;
+}
+
+.examContainer {
+    border: 3px solid black;
+    margin: 0% 0% 1% 0%;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+}
+
+.examContainerHeader {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    border-bottom: 2px solid dimgray;
+}
+
+.examContainerHeader button {
+    height: 2rem;
+}
+
+.drug {
+    border: 2px solid dimgray;
+    margin: 1rem;
+    padding: 5%;
+}
+
+.dimensionsContainer {
+    margin-bottom: 5%;
+}

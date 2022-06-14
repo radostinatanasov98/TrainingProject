@@ -1,0 +1,1 @@
+<%= react_component("NavBar", role: JWT.decode(JSON.parse(cookies[:tokens])['jwt'], nil, false)[0]['user']['role']) %>

@@ -1,0 +1,65 @@
+.navWrapper {
+    width: 100%;
+    height: 3rem;
+    margin-top: 0px;
+    padding-top: 0px;
+    background: linear-gradient(45deg, #4355ad, #4b96e5);
+    display: flex;
+    flex-direction: row;
+    color: whitesmoke;
+    font-size: 18px;
+}
+
+.navigation {
+    display: flex;
+    flex-direction: row;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.navLi {
+    margin-left: 1rem;
+    margin-right: 2rem;
+    margin-top: 8%;
+}
+
+.navLink {
+    text-decoration: none;
+    color: whitesmoke;
+}
+
+.navLink:hover {
+    text-decoration: none;
+    color: #4b96e5;
+}
+
+.sign-out-form {
+    display: block;
+    margin-left: auto;
+    margin-top: 0.3rem;
+    margin-right: 1rem;
+}
+
+.sign-out-btn {
+    display: block;
+    background: none;
+    border-radius: 10px;
+    border: 2px solid whitesmoke;
+    color: whitesmoke;
+    text-align: center;
+    width: 6rem;
+    font-size: 18px;
+    margin: 5px;
+    cursor: pointer;
+}
+
+.sign-out-btn:hover {
+    color: #4355ad;
+    border-color: #4355ad;
+}
+
+body {
+    background-color: whitesmoke;
+    background-image: none;
+}

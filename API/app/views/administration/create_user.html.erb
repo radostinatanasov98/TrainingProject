@@ -1,0 +1,40 @@
+<form action="/action_page.php">
+  <h1>Create New User</h1>
+  <div class="formcontainer">
+    <hr/>
+    <div class="container">
+      <label><strong>Email</strong></label>
+      <input type="text" placeholder="Enter Email" name="email" required>
+      <label><strong>Passowrd</strong></label>
+      <input type="text" placeholder="Enter Passowrd" name="pass" required>
+      <label><strong>Confirm Passowrd</strong></label>
+      <input type="text" placeholder="Re-Enter Passowrd" name="confirm_pass" required>
+      <label><strong>First Name</strong></label>
+      <input type="text" placeholder="Enter First Name" name="first_name" required>
+      <label><strong>Last Name</strong></label>
+      <input type="text" placeholder="Enter Last Name" name="last_name" required>
+      <label><strong>Address</strong></label>
+      <input type="text" placeholder="Enter Address" name="address" required>
+      <label><strong>Date of Birth</strong></label>
+      <input type="date"> <br/>
+      <label><strong>Role</strong></label>
+      <div class="wrapper">
+        <input type="radio" name="select" id="option-1" checked>
+        <input type="radio" name="select" id="option-2">
+        <input type="radio" name="select" id="option-3">
+        <label for="option-1" class="option option-1">
+          <div class="dot"></div>
+          <span>Administrator</span>
+        </label>
+        <label for="option-2" class="option option-2">
+          <div class="dot"></div>
+          <span>Patient</span>
+        </label>
+        <label for="option-3" class="option option-3">
+          <div class="dot"></div>
+          <span>Doctor</span>
+        </label>
+      </div>
+    </div>
+    <button type="submit">Create</button>
+  </form>
