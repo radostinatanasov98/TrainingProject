@@ -8,6 +8,12 @@
         <%= link_to 'All Users', users_all_path, class: 'nav-link'%>
       </li>
       <li class="me-3">
+        <%= link_to 'Create Drug', drugs_create_path, class: 'nav-link'%>
+      </li>
+      <li class="me-3">
+        <%= link_to 'All Drugs', drugs_all_path, class: 'nav-link'%>
+      </li>
+      <li class="me-3">
         <%= button_to 'Sign Out', destroy_user_session_path, method: :delete,:style =>  'border: none; background: none; color: none;', :class => 'nav-link' %>
       </li>
     </ul>

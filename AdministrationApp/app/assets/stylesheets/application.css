@@ -2,7 +2,7 @@
 *= require bootstrap-datepicker
 */
 
-.user-form {
+.user-form, .drug-form {
     display: flex;
     padding: 0% 25% 0% 25%;
     text-align: center;
@@ -26,4 +26,8 @@
 
 .card {
     margin: 3% 25% 0% 25%;
+}
+
+.drug-form-field {
+    margin: 10px;
 }

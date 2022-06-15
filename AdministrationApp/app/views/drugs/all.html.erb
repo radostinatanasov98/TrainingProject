@@ -1,0 +1,24 @@
+<h1 style="text-align: center; margin-top: 2%;">All Drugs</h1>
+<table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">Name</th>
+      <th scope="col">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @Drugs.each do |d| %>
+      <tr>
+        <td><%= d.id %></td></th>
+        <td><%= d.name %></td>
+        <td><%= d.description %></td>
+        <td style="display: flex">
+            <%= link_to 'Show', drugs_show_path(:id => "#{d.id}"), class: 'btn btn-primary me-1'%>
+            <%= link_to 'Edit', drugs_update_path(:id => "#{d.id}"), class: 'btn btn-primary me-1'%>
+            <%= button_to 'Destroy', drugs_delete_path(:id => "#{d.id}"), method: :delete, style: 'display: inline-block;', class: 'btn btn-danger'%>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

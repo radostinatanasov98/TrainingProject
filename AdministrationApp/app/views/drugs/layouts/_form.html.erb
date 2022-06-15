@@ -1,0 +1,8 @@
+<%= form_with model: @drug, class: 'drug-form' do |f|%>
+  <%= f.label :name %>
+  <%= f.text_field :name, value: @Drug.name, placeholder: 'Enter name', class: 'drug-form-field form-control'%>
+  <%= f.label :description %>
+  <%= f.text_field :description, value: @Drug.description, placeholder: 'Enter description',class: 'drug-form-field form-control'%>
+  <%= f.hidden_field :id, value: @Drug.id %>
+  <%= f.submit("Submit", style: 'width: 30%; margin-left: 35%; margin-top: 15px', class: 'btn btn-primary')%>
+<% end %>
