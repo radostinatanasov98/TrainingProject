@@ -37,39 +37,32 @@ module Api
         end
 
         def valid_form_params?
-            unless int_parse(form_params[:user_id]).class == Integer
-                puts 'user id'
+            unless numeric?(form_params[:user_id])
                 return false
             end
 
-            unless float_parse(form_params[:weight_kg]).class == Float || int_parse(form_params[:weight_kg]).class == Integer
-                puts 'weight kg'
+            unless numeric?(form_params[:weight_kg])
                 return false
             end
 
-            unless float_parse(form_params[:height_cm]).class == Float || int_parse(form_params[:height_cm]).class == Integer
-                puts 'height cm'
+            unless numeric?(form_params[:height_cm])
                 return false
             end
 
             unless form_params[:anamnesis].class == String
-                puts 'anamnesis'
                 return false
             end
 
             unless form_params[:perscription][:description].class == String
-                puts 'perscription description'
                 return false
             end
 
             unless form_params[:perscription][:drugs] != nil
-                puts 'perscription drugs'
                 return false
             end
 
             form_params[:perscription][:drugs].each do |d|
-                unless int_parse(d[:drug_id]).class == Integer
-                    puts 'drug id'
+                unless numeric?(d[:drug_id])
                     return false
                 end
 
@@ -82,14 +75,9 @@ module Api
             true
         end
 
-        def float_parse(str)
+        def numeric?(str)
             true if Float(str) rescue false
         end
-
-        def int_parse(str)
-            true if Integer(str) rescue false
-        end
-
     end
 end
 
