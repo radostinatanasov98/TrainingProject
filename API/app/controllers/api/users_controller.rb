@@ -12,13 +12,19 @@ module Api
 
 
         def get_user
-            render json: User.select(:first_name, :last_name, :email, :role_id, :id).find(params[:id])
+            return render json: "Unprocessable Entity.", status: 422 unless params[:id]
+
+            user = User.select(:first_name, :last_name, :email, :role_id, :id).find_by(id: params[:id])
+
+            return render json: "Unprocessable Entity.", status: 422 unless user
+
+            render json: user
         end
 
         def create
             user = User.new(email: user_params[:email], password: user_params[:password], 
               first_name: params[:first_name], last_name: params[:last_name], 
-              address: params[:address], date_of_birth: params[:date_of_birth], roles_id: 1)
+              address: params[:address], date_of_birth: params[:date_of_birth], role_id: 2)
       
             client_app = Doorkeeper::Application.find_by(uid: params[:client_id])
       
@@ -45,7 +51,7 @@ module Api
                 }
               })
             else
-              render(json: { error: user.errors.full_messages }, status: 422)
+              render(json: "Unprocessable Entity.", status: 422)
             end
         end
       

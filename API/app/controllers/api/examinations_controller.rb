@@ -1,6 +1,10 @@
 module Api
     class ExaminationsController < Api::ApplicationController
-        def create 
+        def create
+            unless self.valid_form_params?
+                return render json: 'Unprocessable Entity.', status: 422
+            end
+
             begin
                 examination = Examination.create(user_id: form_params[:user_id], weight_kg: form_params[:weight_kg], 
                 height_cm: form_params[:height_cm], anamnesis: form_params[:anamnesis],
@@ -31,5 +35,49 @@ module Api
         def form_params
             params.permit(:user_id, :weight_kg, :height_cm, :anamnesis, perscription: [ :description, drugs: [ :drug_id, :usage_description ]])
         end
+
+        def valid_form_params?
+            unless numeric?(form_params[:user_id])
+                return false
+            end
+
+            unless numeric?(form_params[:weight_kg])
+                return false
+            end
+
+            unless numeric?(form_params[:height_cm])
+                return false
+            end
+
+            unless form_params[:anamnesis].class == String
+                return false
+            end
+
+            unless form_params[:perscription][:description].class == String
+                return false
+            end
+
+            unless form_params[:perscription][:drugs] != nil
+                return false
+            end
+
+            form_params[:perscription][:drugs].each do |d|
+                unless numeric?(d[:drug_id])
+                    return false
+                end
+
+                unless d[:usage_description].class == String
+                    puts 'usage description'
+                    return false
+                end
+            end
+
+            true
+        end
+
+        def numeric?(str)
+            true if Float(str) rescue false
+        end
     end
 end
+
