@@ -9,19 +9,20 @@ Rails.application.routes.draw do
   # Defines paths for creating a user
   get "users/create", to: "users#create"
   post "users/create", to: "users#new"
-  
-  # Defines paths for editing a user
   get "users/update", to: "users#update"
   post "users/update", to: "users#put"
-
-  # Defines paths for viewing all users
   get "users/all", to: "users#all"
-
-  # Defines path for deleting users
   delete "users/delete", to: "users#destroy"
-
-  # Defines paths for searching users
   get "users/show", to: "users#show"
+
+  # Defines paths for drugs
+  get "drugs/create", to: "drugs#create"
+  post "drugs/create", to: "drugs#new"
+  get "drugs/update", to: "drugs#update"
+  post "drugs/update", to: "drugs#put"
+  get "drugs/show", to: "drugs#show"
+  get "drugs/all", to: "drugs#all"
+  delete "drugs/delete", to: "drugs#destroy"
 
   devise_scope :user do
     authenticated :user do

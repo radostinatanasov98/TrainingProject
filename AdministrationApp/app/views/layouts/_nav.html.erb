@@ -8,10 +8,16 @@
         <%= link_to 'All Users', users_all_path, class: 'nav-link'%>
       </li>
       <li class="me-3">
+        <%= link_to 'Create Drug', drugs_create_path, class: 'nav-link'%>
+      </li>
+      <li class="me-3">
+        <%= link_to 'All Drugs', drugs_all_path, class: 'nav-link'%>
+      </li>
+      <li class="me-3">
         <%= button_to 'Sign Out', destroy_user_session_path, method: :delete,:style =>  'border: none; background: none; color: none;', :class => 'nav-link' %>
       </li>
     </ul>
-    <%= form_with  class: 'form-inline my-2 my-lg-0 search-form',  :url => "show", method: :get do |f| %>
+    <%= form_with model: @user, class: 'form-inline my-2 my-lg-0 search-form',  url: users_show_path, method: :get do |f| %>
       <%= f.text_field :email, style: 'display: inline-block;', class: 'form-control me-3' %>
       <%= f.submit("Search", style: 'margin-right: 15px; display: inline-block', class: 'btn btn-outline-light')%>
     <%- end %>

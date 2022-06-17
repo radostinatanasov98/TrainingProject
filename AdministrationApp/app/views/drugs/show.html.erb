@@ -1,0 +1,18 @@
+<% if @Drug != nil %>
+<div class="card text-center" style="margin: 3% 25% 0px 25%;">
+  <div class="card-header">
+    <h1>You are viewing <%= @Drug.name =%>.</h1>
+  </div>
+  <div class="card-body">
+    <h5 class="card-title">ID: <%= "#{@Drug.id}" %></h5>
+    <h5 class="card-title">Name: <%= @Drug.name %></h5>
+    <h5 class="card-title">Description: <%= @Drug.description %></h5>
+  </div>
+  <div class="card-footer text-muted" style="display: flex; justify-content: center;">
+    <%= link_to 'Edit', drugs_update_path(:id => "#{@Drug.id}"), class: 'btn btn-primary me-1'%>
+    <%= button_to 'Delete', drugs_delete_path(:id => "#{@Drug.id}"), method: :delete, style: 'display: inline-block;', class: 'btn btn-danger'%>
+  </div>
+</div>
+<% else %>
+<h1 style="text-align: center">Drug not found.</h1>
+<% end %>
