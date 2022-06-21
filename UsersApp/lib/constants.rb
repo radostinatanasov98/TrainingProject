@@ -12,11 +12,11 @@ module Constants
     end
 
     def self.user_by_id_url
-        "#{self.api_url}api/users/get_user"
+        "#{self.api_url}api/users"
     end
 
     def self.examinations_by_id_url
-        "#{self.api_url}api/examinations/get_by_id"
+        "#{self.api_url}api/examinations"
     end
 
     def self.all_patients_url

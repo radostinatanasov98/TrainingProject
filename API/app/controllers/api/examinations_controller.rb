@@ -25,7 +25,7 @@ module Api
                 return render json: 'Unprocessable Entity.', status: 422
             end
             
-            user_examinations = Examination.where(user_id: params[:id])
+            user_examinations = Examination.where(user_id: params[:id]).order(created_at: :desc)
             examinations = user_examinations.to_json(:include => { perscription: {:include => {perscription_drug: {:include => :drug}}}})
             render json: examinations
         end

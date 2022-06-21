@@ -18,7 +18,7 @@ class UsersController < ApplicationController
 
         user_res = HTTP.cookies(:tokens => cookies[:tokens])
         .auth("Bearer #{json['jwt']}")
-        .get(Constants.user_by_id_url, :params => { id: id })
+        .get(Constants.user_by_id_url + "/#{id}")
         
         @user = JSON.parse(user_res.body)
         
@@ -27,9 +27,9 @@ class UsersController < ApplicationController
         end
 
         examinations_res = HTTP.auth("Bearer #{json['jwt']}")
-        .get(Constants.examinations_by_id_url, :params => {id: id})
+        .get(Constants.examinations_by_id_url + "/#{id}")
 
-        @examinations = JSON.parse(examinations_res.body) 
+        @examinations = JSON.parse(examinations_res.body)
     end
 
     def log_in
