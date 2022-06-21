@@ -74,37 +74,29 @@ class ExaminationsControllerTest < ActionDispatch::IntegrationTest
   # Tests for Action: get_by_id 
   
   test "get_by_id_should_return_unathorized_without_authorization_header" do
-    get "/api/examinations/get_by_id"
+    get "/api/examinations/1"
 
     assert_response 401
   end
 
   test "get_by_id_should_return_unathorized_without_valid_authorization_header" do
-    get "/api/examinations/get_by_id",
+    get "/api/examinations/1",
       headers: { Authorization: "Bearer invalid_token" }
 
     assert_response 401
   end
 
-  test "should_return_unprocessable_entity_if_id_param_is_not_present" do
-    get "/api/examinations/get_by_id", 
-      headers: { Authorization: "Bearer #{self.token}" }
-
-    assert_response 422
-  end
-
   test "should_return_unprocessable_entity_if_invalid_id_param_is_sent" do
-    get "/api/examinations/get_by_id", 
+    get "/api/examinations/-1", 
     headers: { Authorization: "Bearer #{self.token}" },
     params: { id: -1 }
 
     assert_response 422
   end
 
-  test "should_return_OK_if_valid_id_param_is_present" do
-    get "/api/examinations/get_by_id", 
-    headers: { Authorization: "Bearer #{self.token}" },
-    params: { id: 1 }
+  test "should_return_OK_if_id_is_valid" do
+    get "/api/examinations/1", 
+    headers: { Authorization: "Bearer #{self.token}" }
 
     assert_response 200
   end

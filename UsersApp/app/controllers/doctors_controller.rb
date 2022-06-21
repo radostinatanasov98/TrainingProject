@@ -10,7 +10,7 @@ class DoctorsController < ApplicationController
         
         bearer = self.json_parse(cookies[:tokens])['jwt']
         user_res = HTTP.auth("Bearer #{bearer}")
-        .get(Constants.user_by_id_url, :params => {id: params[:id]})
+        .get(Constants.user_by_id_url + "/#{params[:id]}")
 
         @user = JSON.parse(user_res)
 

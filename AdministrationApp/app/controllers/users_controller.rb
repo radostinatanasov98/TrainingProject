@@ -28,7 +28,7 @@ class UsersController < ApplicationController
         address: user_params[:address],
         date_of_birth: user_params[:date_of_birth],
         role_id: user_params[:role_id],)
-        redirect_to action: 'all'
+        redirect_to action: 'show', email: user.email
       else
         render(json: { error: user.errors.full_messages }, status: 422)
       end

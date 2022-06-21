@@ -12,7 +12,7 @@ Rails.application.routes.draw do
   namespace :api do
     # Defines routes for authorization
     post 'users/create', to: 'users#create'
-    get 'users/get_user', to: 'users#get_user'
+    get 'users/:id', to: 'users#get_user'
 
     # Defines routes for tokens
     get 'tokens', to: 'tokens#index'
@@ -25,7 +25,7 @@ Rails.application.routes.draw do
 
     # Defines routes for examinations
     post 'examinations/create', to: 'examinations#create'
-    get 'examinations/get_by_id', to: 'examinations#get_by_id'
+    get 'examinations/:id', to: 'examinations#get_by_id'
   end
 
   devise_scope :user do

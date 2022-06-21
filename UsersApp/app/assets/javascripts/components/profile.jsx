@@ -34,8 +34,8 @@ ExamTemplate = (props) => {
         <div className="examCard">
           <h3>BASIC INFORMATION</h3>
           <div className="dimensionsContainer">
-            <label>Weight: {props.exam['weightKg']}kg.  </label>
-            <label>Height: {props.exam['heightCm']}cm.</label>
+            <label>Weight: {props.exam['weight_kg']}kg.  </label>
+            <label>Height: {props.exam['height_cm']}cm.</label>
           </div>
           <label><strong>Anamnesis:</strong> {props.exam['anamnesis']}.</label>
           <p></p>

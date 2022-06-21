@@ -27,37 +27,28 @@ class UsersControllerTest <  ActionDispatch::IntegrationTest
 
     # Defines tests for get_user
     test "get_user_should_return_401_without_authorization_header" do 
-        get "/api/users/get_user"
+        get "/api/users/1"
 
         assert_response 401
     end 
 
     test "get_user_should_return_401_with_invalid_bearer_token" do 
-        get "/api/users/get_user",
+        get "/api/users/1",
         headers: { Authorization: "Bearer invalidToken" }
 
         assert_response 401
     end 
 
-    test "get_user_should_return_401_without_id_param" do 
-        get "/api/users/get_user",
+    test "get_user_should_return_401_with_invalid_id_param" do 
+        get "/api/users/-1",
         headers: { Authorization: "Bearer #{self.token}" }
 
         assert_response 422
     end 
 
-    test "get_user_should_return_401_with_invalid_id_param" do 
-        get "/api/users/get_user",
-        headers: { Authorization: "Bearer #{self.token}" },
-        params: { id: -1 }
-
-        assert_response 422
-    end 
-
-    test "get_user_should_return_200_with_valid_token_and_id_param" do 
-        get "/api/users/get_user",
-        headers: { Authorization: "Bearer #{self.token}" },
-        params: { id: 1 }
+    test "get_user_should_return_200_with_valid_token_and_id" do 
+        get "/api/users/1",
+        headers: { Authorization: "Bearer #{self.token}" }
 
         assert_response 200
     end 

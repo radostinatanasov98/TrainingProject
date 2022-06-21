@@ -29,9 +29,11 @@ class DrugsController < ApplicationController
     end
 
     def put
-        drug = drug.find_by(id: form_params[:id])
+        drug = Drug.find_by(id: form_params[:id])
 
         return render json: 'Unprocessable Entity.', status: 422 unless drug && drug.update(name: form_params[:name], description: form_params[:description])
+
+        redirect_to action: 'show', id: drug.id
     end
 
     # Delete
