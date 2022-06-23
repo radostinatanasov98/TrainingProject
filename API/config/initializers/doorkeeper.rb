@@ -17,7 +17,6 @@ module CookieTokenResponse
         'HttpOnly',
       ]
 
-
       cookie = cookie_args.join('; ')
       super.merge({'Set-Cookie' => cookie})
   end

@@ -15,20 +15,28 @@ class TokensController < Doorkeeper::TokensController
             jwt = self.decode_jwt(tokens)
             refresh_token = JSON.parse(tokens)["refresh_token"] 
 
-            if !self.can_refresh(jwt, refresh_token)
-                self.revoke_tokens(jwt)
+            if !self.can_refresh(tokens)
+                self.revoke_tokens(jwt['user']['id'])
                 self.delete_cookies
                 return self.unauthorized_response
             end
             
             super
 
-            self.revoke_token(OauthAccessToken.find_by(refresh_token: refresh_token))
-            
-            return
-        end
+            new_token = OauthAccessToken.find_by(previous_refresh_token: refresh_token)
+            previous_token = OauthAccessToken.find_by(refresh_token: refresh_token)
+            new_token.initial_create = previous_token.initial_create
+            new_token.save
 
-        super
+            self.revoke_token(OauthAccessToken.find_by(refresh_token: refresh_token))
+        elsif
+            user_id = User.find_by(email: params[:email])
+            self.revoke_tokens(user_id)
+            super
+            token = OauthAccessToken.where(resource_owner_id: user_id).last
+            token[:initial_create] = token[:created_at]
+            token.save
+        end
     end
 
     def sign_out
@@ -38,43 +46,8 @@ class TokensController < Doorkeeper::TokensController
 
     private
 
-    def can_refresh(jwt, refresh_token)
-        if request.cookies['tokens'] == ''
-            return false
-        end
-        
-        if OauthAccessToken.find_by(refresh_token: refresh_token)[:revoked_at] != nil
-            return false
-        end
-
-        user_id = jwt["user"]["id"]
-
-        tokens = OauthAccessToken
-        .where("created_at > ?", Time.current.utc - 13.hours)
-        .and(OauthAccessToken.where(resource_owner_id: user_id))
-        .select(:refresh_token, :previous_refresh_token)
-
-        if tokens == []
-            return false
-        end
-
-        tokens_hash = {}
-
-        tokens.each do |token|
-            tokens_hash[token['refresh_token']] = token['previous_refresh_token']
-        end
-
-        current = tokens_hash[refresh_token]
-
-        while current != nil
-            if current == ''
-                return true
-            end
-
-            current = tokens_hash[current]
-        end
-
-        return false
+    def can_refresh(tokens)
+        return true if OauthAccessToken.find_by(token: JSON.parse(tokens)['jwt'])[:initial_create].to_i > (Time.current.utc - 13.hours).to_i
     end
 
     def decode_jwt(tokens)
@@ -97,8 +70,7 @@ class TokensController < Doorkeeper::TokensController
           response.headers['Set-Cookie'] = cookie
     end
 
-    def revoke_tokens(jwt)
-        user_id = jwt['user']['id']
+    def revoke_tokens(user_id)
         tokens = OauthAccessToken.where(resource_owner_id: user_id).and(OauthAccessToken.where(revoked_at: nil))
 
         tokens.each do |t|

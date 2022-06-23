@@ -12,5 +12,5 @@ class User < ApplicationRecord
     user&.valid_password?(password) ? user : nil
   end
 
-  has_many :examinations, foreign_key: "user_id", class_name: "examination"
+  has_many :examinations, foreign_key: "user_id", class_name: "examination", dependent: :delete_all
 end
