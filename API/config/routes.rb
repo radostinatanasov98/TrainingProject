@@ -16,7 +16,7 @@ Rails.application.routes.draw do
 
     # Defines routes for tokens
     get 'tokens', to: 'tokens#index'
-    
+
     # Defines routes for users
     get 'get_patients', to: 'users#patients'
 
@@ -29,7 +29,7 @@ Rails.application.routes.draw do
   end
 
   devise_scope :user do
-    get 'users/sign_out' => "devise/sessions#destroy"
+    get 'users/sign_out' => 'devise/sessions#destroy'
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 end

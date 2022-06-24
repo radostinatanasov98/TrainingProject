@@ -1,54 +1,55 @@
 class DrugsController < ApplicationController
-    # Create
-    def create
-        @Drug = Drug.new
-    end
-    
-    def new
-        drug = Drug.new(name: form_params[:name], description: form_params[:description])
+  # Create
+  def create
+    @Drug = Drug.new
+  end
 
-        return render json: 'Unprocessable Entity.', status: 422 unless drug.save
-    
-        redirect_to action: 'show', id: drug.id
-    end
+  def new
+    drug = Drug.new(name: form_params[:name], description: form_params[:description])
 
-    # Read
-    def all
-        @Drugs = Drug.all
-    end
+    return render json: 'Unprocessable Entity.', status: 422 unless drug.save
 
-    def show
-        @Drug = Drug.find_by(id: params[:id])
-    end
+    redirect_to action: 'show', id: drug.id
+  end
 
-    # Update
-    def update
-        @Drug = Drug.find_by(id: params[:id])
+  # Read
+  def all
+    @Drugs = Drug.all
+  end
 
-        return render json: 'Bad Request.', status: 400 unless @Drug
-    end
+  def show
+    @Drug = Drug.find_by(id: params[:id])
+  end
 
-    def put
-        drug = Drug.find_by(id: form_params[:id])
+  # Update
+  def update
+    @Drug = Drug.find_by(id: params[:id])
 
-        return render json: 'Unprocessable Entity.', status: 422 unless drug && drug.update(name: form_params[:name], description: form_params[:description])
+    return render json: 'Bad Request.', status: 400 unless @Drug
+  end
 
-        redirect_to action: 'show', id: drug.id
-    end
+  def put
+    drug = Drug.find_by(id: form_params[:id])
 
-    # Delete
-    def destroy
-        drug = Drug.find_by(id: params[:id])
+    return render json: 'Unprocessable Entity.', status: 422 unless drug && drug.update(name: form_params[:name],
+                                                                                        description: form_params[:description])
 
-        return render json: "Bad Request", status: 400 unless drug
+    redirect_to action: 'show', id: drug.id
+  end
 
-        drug.destroy
-        redirect_to action: 'all'
-    end
+  # Delete
+  def destroy
+    drug = Drug.find_by(id: params[:id])
 
-    private
+    return render json: 'Bad Request', status: 400 unless drug
 
-    def form_params
-        permitted_params = params.permit(:name, :description, :id)
-    end
+    drug.destroy
+    redirect_to action: 'all'
+  end
+
+  private
+
+  def form_params
+    permitted_params = params.permit(:name, :description, :id)
+  end
 end

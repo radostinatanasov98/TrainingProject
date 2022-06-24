@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module CookieTokenResponse
   def body
     additional_settings = { 'user_id' => token.resource_owner_id }
@@ -6,24 +7,23 @@ module CookieTokenResponse
   end
 
   def headers
-      data = {
-        'jwt': token.token,
-        'refresh_token': token.refresh_token
-      }.to_json
+    data = {
+      'jwt': token.token,
+      'refresh_token': token.refresh_token
+    }.to_json
 
-      cookie_args = [
-        "tokens=#{data}",
-        'Path=/',
-        'HttpOnly',
-      ]
+    cookie_args = [
+      "tokens=#{data}",
+      'Path=/',
+      'HttpOnly'
+    ]
 
-
-      cookie = cookie_args.join('; ')
-      super.merge({'Set-Cookie' => cookie})
+    cookie = cookie_args.join('; ')
+    super.merge({ 'Set-Cookie' => cookie })
   end
 end
 
-Doorkeeper::OAuth::TokenResponse.send :prepend, CookieTokenResponse
+Doorkeeper::OAuth::TokenResponse.prepend CookieTokenResponse
 
 Doorkeeper.configure do
   # Change the ORM that doorkeeper will use (requires ORM extensions installed).
@@ -32,76 +32,75 @@ Doorkeeper.configure do
 
   # This block will be called to check whether the resource owner is authenticated or not.
 
-=begin   resource_owner_authenticator do
-    raise "Please configure doorkeeper resource_owner_authenticator block located in #{__FILE__}"
-    # Put your resource owner authentication logic here.
-    # Example implementation:
-    #   User.find_by(id: session[:user_id]) || redirect_to(new_user_session_url)
-  end
-=end
-access_token_generator '::Doorkeeper::JWT'
+  #   resource_owner_authenticator do
+  #     raise "Please configure doorkeeper resource_owner_authenticator block located in #{__FILE__}"
+  #     # Put your resource owner authentication logic here.
+  #     # Example implementation:
+  #     #   User.find_by(id: session[:user_id]) || redirect_to(new_user_session_url)
+  #   end
+  access_token_generator '::Doorkeeper::JWT'
 
-Doorkeeper::JWT.configure do
-  # Set the payload for the JWT token. This should contain unique information
-  # about the user. Defaults to a randomly generated token in a hash:
-  #     { token: "RANDOM-TOKEN" }
+  Doorkeeper::JWT.configure do
+    # Set the payload for the JWT token. This should contain unique information
+    # about the user. Defaults to a randomly generated token in a hash:
+    #     { token: "RANDOM-TOKEN" }
 
-  token_payload do |opts|
-    user = User.find(opts[:resource_owner_id])
-    
-    {
-      iss: 'TrainingProject',
-      iat: Time.current.utc.to_i,
-      # @see JWT reserved claims - https://tools.ietf.org/html/draft-jones-json-web-token-07#page-7
-      jti: SecureRandom.uuid,
-      exp: Time.current.utc.to_i + 900,
-      user: {
-        id: user.id,
-        role: Role.find_by(id: user.role_id).name
+    token_payload do |opts|
+      user = User.find(opts[:resource_owner_id])
+
+      {
+        iss: 'TrainingProject',
+        iat: Time.current.utc.to_i,
+        # @see JWT reserved claims - https://tools.ietf.org/html/draft-jones-json-web-token-07#page-7
+        jti: SecureRandom.uuid,
+        exp: Time.current.utc.to_i + 900,
+        user: {
+          id: user.id,
+          role: Role.find_by(id: user.role_id).name
+        }
       }
-    }
+    end
+
+    # Optionally set additional headers for the JWT. See
+    # https://tools.ietf.org/html/rfc7515#section-4.1
+    token_headers do |opts|
+      { kid: opts[:application][:uid] }
+    end
+
+    # Use the application secret specified in the access grant token. Defaults to
+    # `false`. If you specify `use_application_secret true`, both `secret_key` and
+    # `secret_key_path` will be ignored.
+    use_application_secret true
+
+    # Set the encryption secret. This would be shared with any other applications
+    # that should be able to read the payload of the token. Defaults to "secret".
+    # secret_key ENV['JWT_SECRET']
+
+    # If you want to use RS* encoding specify the path to the RSA key to use for
+    # signing. If you specify a `secret_key_path` it will be used instead of
+    # `secret_key`.
+    # secret_key_path File.join('path', 'to', 'file.pem')
+
+    # Specify encryption type (https://github.com/progrium/ruby-jwt). Defaults to
+    # `nil`.
+    encryption_method :hs512
   end
 
-  # Optionally set additional headers for the JWT. See
-  # https://tools.ietf.org/html/rfc7515#section-4.1
-  token_headers do |opts|
-    { kid: opts[:application][:uid] }
+  access_token_expires_in 15.minutes
+
+  resource_owner_from_credentials do |_routes|
+    User.authenticate(params[:email], params[:password])
   end
 
-  # Use the application secret specified in the access grant token. Defaults to
-  # `false`. If you specify `use_application_secret true`, both `secret_key` and
-  # `secret_key_path` will be ignored.
-  use_application_secret true
+  grant_flows %w[password]
 
-  # Set the encryption secret. This would be shared with any other applications
-  # that should be able to read the payload of the token. Defaults to "secret".
-  #secret_key ENV['JWT_SECRET']
+  allow_blank_redirect_uri true
 
-  # If you want to use RS* encoding specify the path to the RSA key to use for
-  # signing. If you specify a `secret_key_path` it will be used instead of
-  # `secret_key`.
-  #secret_key_path File.join('path', 'to', 'file.pem')
+  skip_authorization do
+    true
+  end
 
-  # Specify encryption type (https://github.com/progrium/ruby-jwt). Defaults to
-  # `nil`.
-  encryption_method :hs512
-end
-
-access_token_expires_in 15.minutes
-
-resource_owner_from_credentials do |_routes|
-  User.authenticate(params[:email], params[:password])
-end
-
-grant_flows %w[password]
-
-allow_blank_redirect_uri true
-
-skip_authorization do
-  true
-end
-
-use_refresh_token
+  use_refresh_token
   # If you didn't skip applications controller from Doorkeeper routes in your application routes.rb
   # file then you need to declare this block in order to restrict access to the web interface for
   # adding oauth authorized applications. In other case it will return 403 Forbidden response

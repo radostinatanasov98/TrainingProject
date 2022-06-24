@@ -10,97 +10,98 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_06_14_102702) do
-  create_table "drugs", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "name", null: false
-    t.text "description", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+ActiveRecord::Schema[7.0].define(version: 20_220_614_102_702) do
+  create_table 'drugs', charset: 'utf8mb4', collation: 'utf8mb4_0900_ai_ci', force: :cascade do |t|
+    t.string 'name', null: false
+    t.text 'description', null: false
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
   end
 
-  create_table "examinations", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.bigint "user_id"
-    t.float "weight_kg", null: false
-    t.float "height_cm", null: false
-    t.text "anamnesis", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_examinations_on_user_id"
+  create_table 'examinations', charset: 'utf8mb4', collation: 'utf8mb4_0900_ai_ci', force: :cascade do |t|
+    t.bigint 'user_id'
+    t.float 'weight_kg', null: false
+    t.float 'height_cm', null: false
+    t.text 'anamnesis', null: false
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+    t.index ['user_id'], name: 'index_examinations_on_user_id'
   end
 
-  create_table "oauth_access_tokens", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.bigint "resource_owner_id"
-    t.bigint "application_id", null: false
-    t.string "token", limit: 700, null: false
-    t.string "refresh_token"
-    t.integer "expires_in"
-    t.datetime "revoked_at"
-    t.datetime "created_at", null: false
-    t.string "scopes"
-    t.string "previous_refresh_token", default: "", null: false
-    t.index ["application_id"], name: "index_oauth_access_tokens_on_application_id"
-    t.index ["refresh_token"], name: "index_oauth_access_tokens_on_refresh_token", unique: true
-    t.index ["resource_owner_id"], name: "index_oauth_access_tokens_on_resource_owner_id"
-    t.index ["token"], name: "index_oauth_access_tokens_on_token", unique: true
+  create_table 'oauth_access_tokens', charset: 'utf8mb4', collation: 'utf8mb4_0900_ai_ci', force: :cascade do |t|
+    t.bigint 'resource_owner_id'
+    t.bigint 'application_id', null: false
+    t.string 'token', limit: 700, null: false
+    t.string 'refresh_token'
+    t.integer 'expires_in'
+    t.datetime 'revoked_at'
+    t.datetime 'created_at', null: false
+    t.string 'scopes'
+    t.string 'previous_refresh_token', default: '', null: false
+    t.index ['application_id'], name: 'index_oauth_access_tokens_on_application_id'
+    t.index ['refresh_token'], name: 'index_oauth_access_tokens_on_refresh_token', unique: true
+    t.index ['resource_owner_id'], name: 'index_oauth_access_tokens_on_resource_owner_id'
+    t.index ['token'], name: 'index_oauth_access_tokens_on_token', unique: true
   end
 
-  create_table "oauth_applications", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "name", null: false
-    t.string "uid", null: false
-    t.string "secret", null: false
-    t.text "redirect_uri"
-    t.string "scopes", default: "", null: false
-    t.boolean "confidential", default: true, null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["uid"], name: "index_oauth_applications_on_uid", unique: true
+  create_table 'oauth_applications', charset: 'utf8mb4', collation: 'utf8mb4_0900_ai_ci', force: :cascade do |t|
+    t.string 'name', null: false
+    t.string 'uid', null: false
+    t.string 'secret', null: false
+    t.text 'redirect_uri'
+    t.string 'scopes', default: '', null: false
+    t.boolean 'confidential', default: true, null: false
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+    t.index ['uid'], name: 'index_oauth_applications_on_uid', unique: true
   end
 
-  create_table "perscription_drugs", id: false, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.bigint "perscription_id"
-    t.bigint "drug_id"
-    t.text "usage_description", null: false
-    t.index ["drug_id"], name: "index_perscription_drugs_on_drug_id"
-    t.index ["perscription_id"], name: "index_perscription_drugs_on_perscription_id"
+  create_table 'perscription_drugs', id: false, charset: 'utf8mb4', collation: 'utf8mb4_0900_ai_ci',
+                                     force: :cascade do |t|
+    t.bigint 'perscription_id'
+    t.bigint 'drug_id'
+    t.text 'usage_description', null: false
+    t.index ['drug_id'], name: 'index_perscription_drugs_on_drug_id'
+    t.index ['perscription_id'], name: 'index_perscription_drugs_on_perscription_id'
   end
 
-  create_table "perscriptions", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.bigint "examination_id"
-    t.text "description"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["examination_id"], name: "index_perscriptions_on_examination_id"
+  create_table 'perscriptions', charset: 'utf8mb4', collation: 'utf8mb4_0900_ai_ci', force: :cascade do |t|
+    t.bigint 'examination_id'
+    t.text 'description'
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+    t.index ['examination_id'], name: 'index_perscriptions_on_examination_id'
   end
 
-  create_table "roles", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "name", null: false
-    t.text "description", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+  create_table 'roles', charset: 'utf8mb4', collation: 'utf8mb4_0900_ai_ci', force: :cascade do |t|
+    t.string 'name', null: false
+    t.text 'description', null: false
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
   end
 
-  create_table "users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "email", default: "", null: false
-    t.string "encrypted_password", default: "", null: false
-    t.string "reset_password_token"
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.bigint "role_id", default: 2, null: false
-    t.string "first_name", null: false
-    t.string "last_name", null: false
-    t.string "address", null: false
-    t.date "date_of_birth", null: false
-    t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
-    t.index ["role_id"], name: "index_users_on_role_id"
+  create_table 'users', charset: 'utf8mb4', collation: 'utf8mb4_0900_ai_ci', force: :cascade do |t|
+    t.string 'email', default: '', null: false
+    t.string 'encrypted_password', default: '', null: false
+    t.string 'reset_password_token'
+    t.datetime 'reset_password_sent_at'
+    t.datetime 'remember_created_at'
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+    t.bigint 'role_id', default: 2, null: false
+    t.string 'first_name', null: false
+    t.string 'last_name', null: false
+    t.string 'address', null: false
+    t.date 'date_of_birth', null: false
+    t.index ['email'], name: 'index_users_on_email', unique: true
+    t.index ['reset_password_token'], name: 'index_users_on_reset_password_token', unique: true
+    t.index ['role_id'], name: 'index_users_on_role_id'
   end
 
-  add_foreign_key "examinations", "users"
-  add_foreign_key "oauth_access_tokens", "oauth_applications", column: "application_id"
-  add_foreign_key "perscription_drugs", "drugs"
-  add_foreign_key "perscription_drugs", "perscriptions"
-  add_foreign_key "perscriptions", "examinations"
-  add_foreign_key "users", "roles"
+  add_foreign_key 'examinations', 'users'
+  add_foreign_key 'oauth_access_tokens', 'oauth_applications', column: 'application_id'
+  add_foreign_key 'perscription_drugs', 'drugs'
+  add_foreign_key 'perscription_drugs', 'perscriptions'
+  add_foreign_key 'perscriptions', 'examinations'
+  add_foreign_key 'users', 'roles'
 end
