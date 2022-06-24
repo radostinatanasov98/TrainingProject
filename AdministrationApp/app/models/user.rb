@@ -8,9 +8,9 @@ class User < ApplicationRecord
   validates :first_name, :last_name, :address, :role_id, :date_of_birth, presence: true
 
   def self.authenticate(email, password)
-    user = User.find_for_authentication(email: email)
+    user = User.find_for_authentication(email:)
     user&.valid_password?(password) ? user : nil
   end
 
-  has_many :examinations, foreign_key: "user_id", class_name: "examination", dependent: :delete_all
+  has_many :examinations, foreign_key: 'user_id', class_name: 'examination', dependent: :delete_all
 end

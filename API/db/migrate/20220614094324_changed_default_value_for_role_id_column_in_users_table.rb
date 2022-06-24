@@ -7,5 +7,4 @@ class ChangedDefaultValueForRoleIdColumnInUsersTable < ActiveRecord::Migration[7
       to: 2
     )
   end
-
 end

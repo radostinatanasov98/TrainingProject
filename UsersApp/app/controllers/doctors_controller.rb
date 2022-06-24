@@ -1,27 +1,25 @@
 require 'constants'
 class DoctorsController < ApplicationController
-    before_action :authenticate
-    before_action :is_doctor?
+  before_action :authenticate
+  before_action :is_doctor?
 
-    def create_examination
-        if params[:id] == nil 
-            return render json: '400 Bad Request', status: 400
-        end
-        
-        bearer = self.json_parse(cookies[:tokens])['jwt']
-        user_res = HTTP.auth("Bearer #{bearer}")
-        .get(Constants.user_by_id_url + "/#{params[:id]}")
+  def create_examination
+    return render json: '400 Bad Request', status: 400 if params[:id].nil?
 
-        @user = JSON.parse(user_res)
+    bearer = json_parse(cookies[:tokens])['jwt']
+    user_res = HTTP.auth("Bearer #{bearer}")
+                   .get(Constants.user_by_id_url + "/#{params[:id]}")
 
-        res = HTTP.auth("Bearer #{bearer}")
-        .get(Constants.all_drugs_url)
+    @user = JSON.parse(user_res)
 
-        @drugs = JSON.parse(res)
-    end
+    res = HTTP.auth("Bearer #{bearer}")
+              .get(Constants.all_drugs_url)
 
-    def post_examination
-        res = request.body.read
-        render json: JSON.parse()
-    end
+    @drugs = JSON.parse(res)
+  end
+
+  def post_examination
+    res = request.body.read
+    render json: JSON.parse
+  end
 end
