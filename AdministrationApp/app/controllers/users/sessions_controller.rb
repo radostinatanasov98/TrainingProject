@@ -12,7 +12,7 @@ class Users::SessionsController < Devise::SessionsController
   def create
     user = User.find_by(email: sign_in_params[:email])
 
-    if user == nil || user.role_id != 1
+    if user.nil? || user.role_id != 1
       flash[:notice] = 'Invalid Email or password.'
       redirect_to action: 'new'
     else

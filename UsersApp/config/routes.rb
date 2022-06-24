@@ -2,8 +2,8 @@ Rails.application.routes.draw do
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Defines testing routes
-  get "home/index", to: "home#index"
-  get "home/test", to: "home#test"
+  get 'home/index', to: 'home#index'
+  get 'home/test', to: 'home#test'
   get 'test/tokens', to: 'test#tokens'
 
   # Defines patients routes
@@ -13,7 +13,7 @@ Rails.application.routes.draw do
   # Defines doctor routes
   get 'doctors/create_examination', to: 'doctors#create_examination'
   post 'doctors/post_examination', to: 'doctors#post_examination'
-  
+
   # Defines user routes
   get 'users/log_in', to: 'users#log_in'
   get 'profile', to: 'users#profile'
